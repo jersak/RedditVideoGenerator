@@ -2,10 +2,10 @@ from datetime import datetime
 from moviepy.editor import AudioFileClip
 import voiceover
 
-MAX_WORDS_PER_COMMENT = 100
+MAX_WORDS_PER_COMMENT = 200
 MIN_COMMENTS_FOR_FINISH = 4
-MIN_DURATION = 20
-MAX_DURATION = 58
+MIN_DURATION = 40
+MAX_DURATION = 99999
 
 class VideoScript:
     title = ""
@@ -16,7 +16,7 @@ class VideoScript:
     frames = []
 
     def __init__(self, url, title, fileId) -> None:
-        self.fileName = f"{datetime.today().strftime('%Y-%m-%d')}-{fileId}"
+        self.fileName = fileId
         self.url = url
         self.title = title
         self.titleAudioClip = self.__createVoiceOver("title", title)
@@ -44,6 +44,7 @@ class VideoScript:
         return self.fileName
 
     def __createVoiceOver(self, name, text):
+        print(f"Creating voiceover for text: {text}")
         file_path = voiceover.create_voice_over(f"{self.fileName}-{name}", text)
         audioClip = AudioFileClip(file_path)
         if (self.totalDuration + audioClip.duration > MAX_DURATION):
