@@ -7,7 +7,7 @@ def create_voice_over(fileName, text):
     engine = pyttsx3.init()
     engine.setProperty('rate', 125)
     voices = engine.getProperty('voices')
-    engine.setProperty('voice', voices[1].id)
+    engine.setProperty('voice', voices[2].id)
     engine.save_to_file(text, filePath)
     engine.runAndWait()
     return filePath

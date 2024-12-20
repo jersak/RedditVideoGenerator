@@ -30,7 +30,7 @@ def createVideo():
     bgIndex = random.randint(0, bgCount-1)
     backgroundVideo = VideoFileClip(
         filename=f"{bgDir}/{bgPrefix}{bgIndex}.mp4", 
-        audio=False).subclip(0, script.getDuration())
+        audio=True).subclip(0, script.getDuration())
     w, h = backgroundVideo.size
 
     def __createClip(screenShotFile, audioClip, marginSize):
@@ -57,7 +57,7 @@ def createVideo():
     # Compose background/foreground
     final = CompositeVideoClip(
         clips=[backgroundVideo, contentOverlay], 
-        size=backgroundVideo.size).set_audio(contentOverlay.audio)
+        size=backgroundVideo.size).set_audio(CompositeAudioClip([contentOverlay.audio, backgroundVideo.audio]))
     final.duration = script.getDuration()
     final.set_fps(backgroundVideo.fps)
 
